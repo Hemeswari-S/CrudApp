@@ -45,7 +45,6 @@ connectToDB();
 const options = {
   key: fs.readFileSync('server.key'),
   cert: fs.readFileSync('server.cert'),
-  ca: fs.readFileSync('ca_bundle.crt') 
 };
 
 app.get('/test-cors', (req, res) => {
