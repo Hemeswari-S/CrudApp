@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { connectToDB } from "./config/connectTODB.js";
 import { User_route } from "./Routes/User_Root.js";
@@ -8,8 +9,18 @@ import fs from 'fs';
 
 const app = express();
 
+// Configure CORS options
+const corsOptions = {
+  origin: 'https://crudapp-client.onrender.com', // Allow only this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
 
+// Use CORS middleware
+app.use(cors(corsOptions));
 
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
