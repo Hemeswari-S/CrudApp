@@ -1,1 +1,1 @@
-export const RestApiUrl= "https://localhost:8030/"
+export const RestApiUrl= "https://crudapp-x5kb.onrender.com/"
