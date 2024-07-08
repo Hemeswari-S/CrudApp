@@ -9,31 +9,51 @@ import fs from 'fs';
 
 const app = express();
 
-// Configure CORS options
 const corsOptions = {
-  origin: 'https://crudapp-client.onrender.com', // Allow only this origin
+  origin: 'https://crudapp-client.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
-// Use CORS middleware
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  console.log('Incoming Request:', {
+    method: req.method,
+    url: req.url,
+    headers: req.headers
+  });
+  next();
+});
 
-// Handle preflight requests
+app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    console.log('Outgoing Response:', {
+      statusCode: res.statusCode,
+      headers: res.getHeaders()
+    });
+  });
+  next();
+});
+
 connectToDB();
 
 const options = {
   key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
+  cert: fs.readFileSync('server.cert'),
+  ca: fs.readFileSync('ca_bundle.crt') 
 };
 
+app.get('/test-cors', (req, res) => {
+  res.json({ message: 'CORS is working!' });
+});
+
 app.use("/", User_route);
-app.use("/signup", Sign_route);
+app.use("/signup", cors(corsOptions), Sign_route); 
 app.all("*", (req, res) => {
   res.send("invalid URL..!");
 });
