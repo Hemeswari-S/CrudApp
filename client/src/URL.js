@@ -1,1 +1,1 @@
-export const RestApiUrl= "https://render.com/docs/web-services#10000"
+export const RestApiUrl= "https://crudapp-backent.onrender.com/"
