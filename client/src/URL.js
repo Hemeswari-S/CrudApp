@@ -1,0 +1,1 @@
+export const RestApiUrl= "https://localhost:8030/"
