@@ -9,17 +9,15 @@ import fs from 'fs'
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://crudapp-client.onrender.com" 
+}
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 connectToDB();
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Allow requests from any origin
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE"); // Allow these HTTP methods
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Allow these headers
-  next();
-});
+
 
 const options = {
   key: fs.readFileSync('server.key'),
