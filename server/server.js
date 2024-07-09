@@ -10,7 +10,7 @@ import fs from 'fs'
 const app = express();
 
 const corsOptions = {
-  origin: "https://crudapp-client.onrender.com" 
+  origin: "https://crudapp-client.onrender.com/signup" 
 }
 app.use(cors(corsOptions));
 app.use(express.json());
