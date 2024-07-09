@@ -4,8 +4,6 @@ import bodyParser from "body-parser";
 import { connectToDB } from "./config/connectTODB.js";
 import { User_route } from "./Routes/User_Root.js";
 import { Sign_route } from "./Routes/SignUp&In_Root.js";
-import https from "https";
-import fs from "fs";
 
 const app = express();
 
@@ -24,18 +22,12 @@ app.use((req, res, next) => {
 });
 connectToDB();
 
-const options = {
-  key: fs.readFileSync("server.key"),
-  cert: fs.readFileSync("server.cert"),
-};
-
 app.use("/", User_route);
 app.use("/signup", Sign_route);
 app.all("*", (req, res) => {
   res.send("invalid URL..!");
 });
-https.createServer(options, app).listen(process.env.PORT, () => {
-  console.log(
-    `Backend server running on https://localhost:${process.env.PORT}`
-  );
+
+app.listen(process.env.PORT, () => {
+  console.log(`Backend server running on port ${process.env.PORT}`);
 });
