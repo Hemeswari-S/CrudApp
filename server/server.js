@@ -9,12 +9,8 @@ import fs from "fs";
 
 const app = express();
 
-const corsOptions = {
-  origin: "*",
-  methods: "POST, GET, PUT,DELETE",
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-app.use(cors(corsOptions));
+
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use((req, res, next) => {
